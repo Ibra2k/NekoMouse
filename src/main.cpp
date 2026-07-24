@@ -96,7 +96,7 @@ int main() {
         }
 
         // Sit and stand
-        if (IsKeyPressed(KEY_S))
+        if (IsKeyDown(KEY_LEFT_ALT) && IsKeyPressed(KEY_S))
         {
             game.sitToggle = !game.sitToggle;
             std::cout << "Cat Sit Toggled: " << std::boolalpha << game.sitToggle << '\n';
