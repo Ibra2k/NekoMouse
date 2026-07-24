@@ -2,7 +2,6 @@
 #include <cassert>
 #include <memory>
 #include <raylib.h>
-#include <iostream>
 
 // Implementation Struct
 struct Animation::Implementation

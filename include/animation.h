@@ -13,11 +13,11 @@ class Animation
 {
 public:
     int m_current {};
-    float m_speed {0.5};
+    float m_speed {0.7};
     float m_duration {0.5};
 
     Animation();
-    ~Animation(); // destruct for smart ptr
+    ~Animation();
 
     struct Implementation;
     std::unique_ptr<Implementation> pimpl;

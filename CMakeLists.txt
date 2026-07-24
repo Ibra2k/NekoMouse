@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(cat)
+project(cat LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -14,7 +14,6 @@ elseif(UNIX)
     find_package(X11 REQUIRED)
 endif()
 
-include_directories(include)
 
 add_executable(kitty
     src/main.cpp
@@ -24,6 +23,7 @@ add_executable(kitty
     ${PLATFORM_SOURCES}
 )
 
+target_include_directories(kitty PRIVATE include)
 target_link_libraries(kitty PRIVATE raylib)
 
 if (APPLE)
