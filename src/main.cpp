@@ -1,3 +1,19 @@
+#include "state.h"
+#include <array>
+#include <asio/socket_base.hpp>
+#include <exception>
+#include <fstream>
+#include <ios>
+#include <netinet/in.h>
+#include <raylib.h>
+#include <string>
+#include <utility>
+#include <iostream>
+#include <asio.hpp>
+#include <arpa/inet.h> // For htonl/ntohl
+#include <cstdint> // For uint32_t
+#include <cstdlib> // for getenv
+
 using asio::ip::tcp;
 using asio::ip::udp;
 
