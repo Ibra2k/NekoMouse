@@ -2,12 +2,12 @@
 
 ## Controls
 
-- CTRL + Q = Kill the cat process
-- CTRL + C = Open color palette to change cat color
+- LEFT ALT + Q = Kill the cat process
+- LEFT ALT + C = Open color palette to change cat color
 - CTRL + S = Save cat color
-- CTRL + ↑/↓ = Increase and Decrease speed respectively
+- LEFT ALT + ARROW RIGHT/ARROW LEFT = Increase and Decrease speed respectively
 - LEFT ALT + S = Sit/Stand cat
-- CTRL + O = Connect Online
+- CTRL + O = Connect Online (Not working currently)
 
 
 # Installing NekoCat on Mac
