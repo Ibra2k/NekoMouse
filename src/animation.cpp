@@ -48,13 +48,12 @@ const Texture2D& Animation::getCurrentFrame()
 
 }
 
-
 void Animation::createAnimation(int frameCount, std::string fileName)
 {
+    std::string basePath = GetApplicationDirectory();
     for (int i {1}; i <= frameCount; i++)
     {
-        std::string path = "../assets/white_cat/" + fileName + std::to_string(i) + ".png";
+        std::string path = basePath + "assets/white_cat/" + fileName + std::to_string(i) + ".png";
         pimpl->frames.push_back(LoadTexture(path.c_str()));
     }
 }
-
