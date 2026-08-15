@@ -26,7 +26,7 @@ A window with white or black background and text will open. This is normal — d
 
 ## Step 2: Download the install script
 
-[Download install.sh here](#) *(replace with your actual link)*
+[Download install_script.sh here](#)
 
 Save it somewhere easy to find, like your **Downloads** folder or **Desktop**.
 
