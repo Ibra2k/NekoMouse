@@ -10,7 +10,7 @@
 
 set -euo pipefail
 
-REPO_URL="https://github.com/<you>/<repo>.git"   # <-- fill this in
+REPO_URL="https://github.com/Ibra2k/NekoMouse.git"   
 APP_NAME="kitty"
 INSTALL_DIR="$HOME/.local/share/nekocat"
 BIN_DIR="/usr/local/bin"
