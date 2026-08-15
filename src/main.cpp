@@ -1,18 +1,3 @@
-#include "state.h"
-#include <array>
-#include <asio/socket_base.hpp>
-#include <exception>
-#include <fstream>
-#include <ios>
-#include <netinet/in.h>
-#include <raylib.h>
-#include <string>
-#include <utility>
-#include <iostream>
-#include <asio.hpp>
-#include <arpa/inet.h> // For htonl/ntohl
-#include <cstdint> // For uint32_t
-
 using asio::ip::tcp;
 using asio::ip::udp;
 
@@ -20,6 +5,17 @@ using asio::ip::udp;
 #define MAX_SPEED 10
 #define SERVER_IP "127.0.0.1"
 #define SERVER_PORT "1313"
+
+// Returns a writable path for the saved-color file, inside the user's
+// Application Support folder — NOT relative to the working directory,
+// since that's unpredictable (and /Applications isn't writable anyway).
+std::string getSaveFilePath()
+{
+    std::string home = std::getenv("HOME");
+    std::string dir = home + "/Library/Application Support/NekoCat";
+    system(("mkdir -p \"" + dir + "\"").c_str()); // ensure the folder exists
+    return dir + "/savedColors.txt";
+}
 
 int main() {
 
@@ -49,14 +45,24 @@ int main() {
     float newSpeed {};
 
 
-    std::ifstream CatColor(".savedColors.txt");
-    if(!CatColor.fail())
+    std::ifstream CatColor(getSaveFilePath());
+    if(CatColor.is_open() && !CatColor.fail())
     {
         std::string tmpStr {};
         std::getline(CatColor, tmpStr);
 
-        unsigned int initialColor {static_cast<unsigned int>(std::stoul(tmpStr))};
-        catColor = GetColor(initialColor);
+        if (!tmpStr.empty())
+        {
+            try
+            {
+                unsigned int initialColor {static_cast<unsigned int>(std::stoul(tmpStr))};
+                catColor = GetColor(initialColor);
+            }
+            catch (const std::exception& e)
+            {
+                std::cerr << "Saved color file was corrupted, using default: " << e.what() << '\n';
+            }
+        }
         CatColor.close();
     }
 
@@ -105,14 +111,13 @@ int main() {
             if(game.showColor == false) SetWindowSize(100, 100);
         }
 
-        // (CTRL + UP/DOWN) Speed Control 
-        if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyPressed(KEY_UP))
+        if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyPressed(KEY_RIGHT))
         {
             newSpeed = myCat.increaseSpeed();
             game.showSpeedText = true;
         }
 
-        if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyPressed(KEY_DOWN))
+        if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyPressed(KEY_LEFT))
         {
             newSpeed = myCat.decreaseSpeed();
             game.showSpeedText = true;
@@ -121,11 +126,17 @@ int main() {
         // Save choosen color
         if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyPressed(KEY_S))
         {
-            std::ofstream ColorsSaved(".savedColors.txt");
-            int hexValue = ColorToInt(catColor);
-            ColorsSaved << hexValue;
-
-            game.showSavedText = true;
+            std::ofstream ColorsSaved(getSaveFilePath());
+            if (!ColorsSaved)
+            {
+                std::cerr << "Failed to open save file for writing!\n";
+            }
+            else
+            {
+                int hexValue = ColorToInt(catColor);
+                ColorsSaved << hexValue;
+                game.showSavedText = true;
+            }
         }
 
         // Sit and stand
