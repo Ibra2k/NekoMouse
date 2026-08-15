@@ -10,7 +10,7 @@
 
 set -euo pipefail
 
-REPO_URL="https://github.com/Ibra2k/NekoMouse.git" 
+REPO_URL="https://github.com/<you>/<repo>.git"   # <-- fill this in
 APP_NAME="kitty"
 INSTALL_DIR="$HOME/.local/share/nekocat"
 BIN_DIR="/usr/local/bin"
@@ -145,7 +145,10 @@ fi
 # Any assets your app loads at runtime (sprites, fonts, saved-color file, etc.)
 # go alongside the executable so the bundle is self-contained.
 if [[ -d "$INSTALL_DIR/assets" ]]; then
-    cp -R "$INSTALL_DIR/assets" "$RESOURCES_DIR/assets"
+    # Copied next to the executable (Contents/MacOS), not Contents/Resources,
+    # because the game code resolves asset paths via GetApplicationDirectory(),
+    # which returns the folder the executable itself lives in.
+    cp -R "$INSTALL_DIR/assets" "$MACOS_DIR/assets"
 fi
 
 # ---------------------------------------------------------------------------
