@@ -22,7 +22,7 @@ Terminal will let us run commands and not abide by big tech corp.
 
 ## Step 2: Download the install script
 
-[Download install_script.sh here](#)
+[Download install.sh here](https://raw.githubusercontent.com/Ibra2k/NekoMouse/main/install.sh)
 
 Save it somewhere easy to find, like your **Downloads** folder or **Desktop**.
 
