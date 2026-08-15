@@ -1,0 +1,32 @@
+[
+{
+  "directory": "/home/ibrahim/Programming/Cpp/NekoCat/build",
+  "command": "/nix/store/adcz0m6qq2flmshdf0zz2xwjr5zbq1gr-gcc-wrapper-15.3.0/bin/g++ -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -DUSE_LIBTYPE_SHARED -I/home/ibrahim/Programming/Cpp/NekoCat/include -I/opt/homebrew/include -I/usr/local/include -std=gnu++17 -o CMakeFiles/kitty.dir/src/main.cpp.o -c /home/ibrahim/Programming/Cpp/NekoCat/src/main.cpp",
+  "file": "/home/ibrahim/Programming/Cpp/NekoCat/src/main.cpp",
+  "output": "CMakeFiles/kitty.dir/src/main.cpp.o"
+},
+{
+  "directory": "/home/ibrahim/Programming/Cpp/NekoCat/build",
+  "command": "/nix/store/adcz0m6qq2flmshdf0zz2xwjr5zbq1gr-gcc-wrapper-15.3.0/bin/g++ -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -DUSE_LIBTYPE_SHARED -I/home/ibrahim/Programming/Cpp/NekoCat/include -I/opt/homebrew/include -I/usr/local/include -std=gnu++17 -o CMakeFiles/kitty.dir/src/cat.cpp.o -c /home/ibrahim/Programming/Cpp/NekoCat/src/cat.cpp",
+  "file": "/home/ibrahim/Programming/Cpp/NekoCat/src/cat.cpp",
+  "output": "CMakeFiles/kitty.dir/src/cat.cpp.o"
+},
+{
+  "directory": "/home/ibrahim/Programming/Cpp/NekoCat/build",
+  "command": "/nix/store/adcz0m6qq2flmshdf0zz2xwjr5zbq1gr-gcc-wrapper-15.3.0/bin/g++ -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -DUSE_LIBTYPE_SHARED -I/home/ibrahim/Programming/Cpp/NekoCat/include -I/opt/homebrew/include -I/usr/local/include -std=gnu++17 -o CMakeFiles/kitty.dir/src/animation.cpp.o -c /home/ibrahim/Programming/Cpp/NekoCat/src/animation.cpp",
+  "file": "/home/ibrahim/Programming/Cpp/NekoCat/src/animation.cpp",
+  "output": "CMakeFiles/kitty.dir/src/animation.cpp.o"
+},
+{
+  "directory": "/home/ibrahim/Programming/Cpp/NekoCat/build",
+  "command": "/nix/store/adcz0m6qq2flmshdf0zz2xwjr5zbq1gr-gcc-wrapper-15.3.0/bin/g++ -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -DUSE_LIBTYPE_SHARED -I/home/ibrahim/Programming/Cpp/NekoCat/include -I/opt/homebrew/include -I/usr/local/include -std=gnu++17 -o CMakeFiles/kitty.dir/src/state.cpp.o -c /home/ibrahim/Programming/Cpp/NekoCat/src/state.cpp",
+  "file": "/home/ibrahim/Programming/Cpp/NekoCat/src/state.cpp",
+  "output": "CMakeFiles/kitty.dir/src/state.cpp.o"
+},
+{
+  "directory": "/home/ibrahim/Programming/Cpp/NekoCat/build",
+  "command": "/nix/store/adcz0m6qq2flmshdf0zz2xwjr5zbq1gr-gcc-wrapper-15.3.0/bin/g++ -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -DUSE_LIBTYPE_SHARED -I/home/ibrahim/Programming/Cpp/NekoCat/include -I/opt/homebrew/include -I/usr/local/include -std=gnu++17 -o CMakeFiles/kitty.dir/src/linux_mouse.cpp.o -c /home/ibrahim/Programming/Cpp/NekoCat/src/linux_mouse.cpp",
+  "file": "/home/ibrahim/Programming/Cpp/NekoCat/src/linux_mouse.cpp",
+  "output": "CMakeFiles/kitty.dir/src/linux_mouse.cpp.o"
+}
+]

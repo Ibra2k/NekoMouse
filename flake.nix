@@ -22,11 +22,10 @@
             gcc
             cmake
             gnumake
-            raylib
-            raylib
-            pkg-config
 
             raylib
+            asio
+            pkg-config
             libX11
           ];
         };

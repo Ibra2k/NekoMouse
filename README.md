@@ -1,4 +1,13 @@
-# Mouse Kitty
+# Neko Cat
+
+## Controls
+
+- CTRL + Q = Kill the cat process
+- CTRL + C = Open color palette to change cat color
+- CTRL + S = Save cat color
+- CTRL + ↑/↓ = Increase and Decrease speed respectively
+- LEFT ALT + S = Sit/Stand cat
+- CTRL + O = Connect Online
 
 ## macOS Setup
 

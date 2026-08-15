@@ -1,14 +1,25 @@
 #include "state.h"
+#include <array>
+#include <asio/socket_base.hpp>
+#include <exception>
 #include <fstream>
 #include <ios>
+#include <netinet/in.h>
 #include <raylib.h>
 #include <string>
 #include <utility>
 #include <iostream>
+#include <asio.hpp>
+#include <arpa/inet.h> // For htonl/ntohl
+#include <cstdint> // For uint32_t
 
+using asio::ip::tcp;
+using asio::ip::udp;
 
 // Used for the speed control keybinding
 #define MAX_SPEED 10
+#define SERVER_IP "127.0.0.1"
+#define SERVER_PORT "1313"
 
 int main() {
 
@@ -20,11 +31,23 @@ int main() {
 
 
     InitWindow(100, 100, "");
+	asio::io_context io;
+
+	tcp::resolver tcpResolver(io);
+
+	std::string serverAddress {SERVER_IP};
+	std::string serverPort {SERVER_PORT};
+
+    tcp::resolver::results_type tcpEndpoint = tcpResolver.resolve(tcp::v4(), serverAddress, serverPort);
+
+    tcp::socket tcpSocket(io);
 
     SetTargetFPS(60);
     GameState game {};
     Cat myCat {};
     Color catColor {PINK}; // default color
+    float newSpeed {};
+
 
     std::ifstream CatColor(".savedColors.txt");
     if(!CatColor.fail())
@@ -38,7 +61,6 @@ int main() {
     }
 
 
-    float newSpeed {};
 
     game.initAnims();
 
@@ -56,13 +78,23 @@ int main() {
                 newPos.first + catOffset,
                 newPos.second + catOffset
             );
+
+            if(game.onlineToggle)
+            {
+                float xNetworkVal = htonl(myCat.getCurrCatPosX());
+                float yNetworkVal = htonl(myCat.getCurrCatPosY());
+
+                tcpSocket.send(asio::buffer(&xNetworkVal, sizeof(xNetworkVal)));
+                tcpSocket.send(asio::buffer(&yNetworkVal, sizeof(yNetworkVal)));
+            }
+
         }
+
 
         game.updateAnims();
 
 
         // Keybindings
-        
         // (CTRL + Q) Quit Program 
         if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyPressed(KEY_Q))  break;
 
@@ -79,6 +111,7 @@ int main() {
             newSpeed = myCat.increaseSpeed();
             game.showSpeedText = true;
         }
+
         if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyPressed(KEY_DOWN))
         {
             newSpeed = myCat.decreaseSpeed();
@@ -100,6 +133,27 @@ int main() {
         {
             game.sitToggle = !game.sitToggle;
             std::cout << "Cat Sit Toggled: " << std::boolalpha << game.sitToggle << '\n';
+        }
+
+        // Connect Online
+        if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyPressed(KEY_O))
+        {
+            game.onlineToggle = !game.onlineToggle;
+
+            std::cout << "Connecting Online..." << '\n';
+
+            try
+            {
+                std::error_code errorCode;
+                asio::connect(tcpSocket, tcpEndpoint);
+            }
+            catch (std::exception e)
+            {
+                std::cout << "Could Not Connect\n";
+                return 1;
+            }
+
+            game.showConnectedText = true;
         }
 
         // Drawing
@@ -132,7 +186,9 @@ int main() {
         }
 
         game.displayTempText(newSpeed);
-        game.displayTempText();
+        if(game.showSavedText) game.displayTempText("Saved!");
+        if(game.showConnectedText) game.displayTempText("Connected!");
+
         game.toggleColorPalette(catColor);
 
 

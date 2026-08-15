@@ -16,7 +16,9 @@ struct GameState
 
     bool showSpeedText {false};
     bool showSavedText {false};
+    bool showConnectedText {false};
     bool sitToggle {false};
+    bool onlineToggle {false};
 
     bool showColor {false};
 
@@ -25,7 +27,7 @@ struct GameState
     void updateAnims();
 
     void displayTempText(float speed);
-    void displayTempText();
+    void displayTempText(const char * text);
 
     void toggleColorPalette(Color& catColor);
 

@@ -58,15 +58,16 @@ void GameState::displayTempText(float speed)
     }
 }
 
-void GameState::displayTempText()
+void GameState::displayTempText(const char * text)
 {
-    if (duration > 0.0f && showSavedText)
+    if (duration > 0.0f && (showSavedText || showConnectedText))
     {
-        DrawText("Saved !", 0, 0, 10, RAYWHITE);
+        DrawText(text, 0, 0, 10, RAYWHITE);
         duration -= GetFrameTime();
 
         if(duration < 0.0f){
             showSavedText = false;
+            showConnectedText = false;
             duration = 1;
         }
 
