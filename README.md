@@ -1,3 +1,10 @@
+
+# Happy Birthday 🥳
+Even though I could not remember the date of your birthday I hope this makes up for it.
+
+# Description
+NekoMouse was really just created since it was something you liked (which is cats) and I guess my gesture of just celebrating on how long it has been. The application is just a cat that sits on your computer that follows your mouse around, and there are a few little things you can do, like change the color of the cat, make it sit/sleep, decrease or increase the delay of its responsiveness based on how long you keep on your mouse still. It isn't much but that is what I was aiming for since I wanted something minimal and not something super hyper optimized, I might add online mode or online chatting later (since I tried but don't have enough time) so live with this.
+
 # Neko Cat
 
 ## Controls
