@@ -27,7 +27,7 @@ int main() {
     const int catOffset = 20;
 
     SetConfigFlags(FLAG_WINDOW_UNDECORATED | FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_TRANSPARENT |
-               FLAG_WINDOW_TOPMOST| FLAG_WINDOW_UNFOCUSED) ;
+               FLAG_WINDOW_TOPMOST) ;
 
 
     InitWindow(100, 100, "");

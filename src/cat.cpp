@@ -21,7 +21,7 @@ struct Cat::pimplImplementation
     float m_prevCatPosY {};
 
     float m_idleTimer {};
-    float m_idleThreashold {2.0f};
+    float m_idleThreashold {0.0f};
     int m_prevMousePosX {};
     int m_prevMousePosY {};
 
