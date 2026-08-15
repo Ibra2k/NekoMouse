@@ -21,8 +21,7 @@ Terminal will let us run commands and not abide by big tech corp.
 3. Press `Enter`
 
 ## Step 2: Download the install script
-
-[Download install.sh here](https://raw.githubusercontent.com/Ibra2k/NekoMouse/main/install.sh)
+[Download install.sh](https://github.com/Ibra2k/NekoMouse/releases/download/v1.0/install.sh)
 
 Save it somewhere easy to find, like your **Downloads** folder or **Desktop**.
 
