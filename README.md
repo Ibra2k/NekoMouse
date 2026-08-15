@@ -9,7 +9,6 @@
 - LEFT ALT + S = Sit/Stand cat
 - CTRL + O = Connect Online
 
-## macOS Setup
 
 # Installing NekoCat on Mac
 
