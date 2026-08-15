@@ -118,22 +118,22 @@ int main() {
 
         // Keybindings
         // (CTRL + Q) Quit Program 
-        if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyPressed(KEY_Q))  break;
+        if (IsKeyDown(KEY_LEFT_ALT) && IsKeyPressed(KEY_Q))  break;
 
         // Open Color palette
-        if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyPressed(KEY_C))
+        if (IsKeyDown(KEY_LEFT_ALT) && IsKeyPressed(KEY_C))
         {
             game.showColor = !game.showColor;
             if(game.showColor == false) SetWindowSize(100, 100);
         }
 
-        if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyPressed(KEY_RIGHT))
+        if (IsKeyDown(KEY_LEFT_ALT) && IsKeyPressed(KEY_RIGHT))
         {
             newSpeed = myCat.increaseSpeed();
             game.showSpeedText = true;
         }
 
-        if (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyPressed(KEY_LEFT))
+        if (IsKeyDown(KEY_LEFT_ALT) && IsKeyPressed(KEY_LEFT))
         {
             newSpeed = myCat.decreaseSpeed();
             game.showSpeedText = true;
