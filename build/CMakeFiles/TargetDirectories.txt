@@ -1,3 +1,0 @@
-/home/ibrahim/Programming/Cpp/NekoCat/build/CMakeFiles/kitty.dir
-/home/ibrahim/Programming/Cpp/NekoCat/build/CMakeFiles/edit_cache.dir
-/home/ibrahim/Programming/Cpp/NekoCat/build/CMakeFiles/rebuild_cache.dir
