@@ -9,25 +9,20 @@
 - LEFT ALT + S = Sit/Stand cat
 - CTRL + O = Connect Online
 
-## macOS Setup
 
 # Installing NekoCat on Mac
 
-No coding experience needed — just follow these steps. The whole process takes about 5–15 minutes, mostly spent waiting on downloads.
-
 ## Step 1: Open Terminal
 
-Terminal is a built-in Mac app that lets you run commands.
+Terminal will let us run commands and not abide by big tech corp.
 
 1. Press `Cmd + Space` to open Spotlight Search
 2. Type `Terminal`
 3. Press `Enter`
 
-A window with white or black background and text will open. This is normal — don't worry, you won't need to know how to code.
-
 ## Step 2: Download the install script
 
-[Download install.sh here](#) *(replace with your actual link)*
+[Download install.sh here](https://raw.githubusercontent.com/Ibra2k/NekoMouse/main/install.sh)
 
 Save it somewhere easy to find, like your **Downloads** folder or **Desktop**.
 
