@@ -1,13 +1,16 @@
+# Description
+NekoMouse was really just created since it was something you liked (which is cats) and I guess my gesture of just celebrating on how long it has been. The application is just a cat that sits on your computer that follows your mouse around, and there are a few little things you can do, like change the color of the cat, make it sit/sleep, decrease or increase the delay of its responsiveness based on how long you keep on your mouse still. It isn't much but that is what I was aiming for since I wanted something minimal and not something super hyper optimized, I might add online mode or online chatting later.
+
 # Neko Cat
 
 ## Controls
 
-- CTRL + Q = Kill the cat process
-- CTRL + C = Open color palette to change cat color
+- LEFT ALT + Q = Kill the cat process
+- LEFT ALT + C = Open color palette to change cat color
 - CTRL + S = Save cat color
-- CTRL + ↑/↓ = Increase and Decrease speed respectively
+- LEFT ALT + ARROW RIGHT/ARROW LEFT = Increase and Decrease speed respectively
 - LEFT ALT + S = Sit/Stand cat
-- CTRL + O = Connect Online
+- CTRL + O = Connect Online (Not working currently)
 
 
 # Installing NekoCat on Mac
@@ -21,8 +24,7 @@ Terminal will let us run commands and not abide by big tech corp.
 3. Press `Enter`
 
 ## Step 2: Download the install script
-
-[Download install.sh here](https://raw.githubusercontent.com/Ibra2k/NekoMouse/main/install.sh)
+[Download install.sh](https://github.com/Ibra2k/NekoMouse/releases/download/v1.0/install.sh)
 
 Save it somewhere easy to find, like your **Downloads** folder or **Desktop**.
 
