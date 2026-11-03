@@ -1,4 +1,5 @@
 #include "state.h"
+#include "../../common/cat_state.h"
 #include <raylib.h>
 
 
@@ -41,47 +42,22 @@ void GameState::cleanAnims()
         for (auto& frame : anim.getFrames()) { UnloadTexture(frame); } }
 }
 
-
-void GameState::displayTempText(float speed)
+Texture2D GameState::frameFor(const CatState& state)
 {
-    if (duration > 0.0f && showSpeedText)
+    switch (state.behavior)
     {
-        DrawText(TextFormat("Speed: %d", (int)(10-speed)), 0, 0, 10, RAYWHITE);
-        duration -= GetFrameTime();
-
-        // Reset duration and showText switch
-        if(duration < 0.0f){
-            showSpeedText = false;
-            duration = 1;
-        }
-
+        case Behavior::SITTING:
+            return sitAnim.getCurrentFrame();
+            break;
+        case Behavior::WALKING:
+            return walkAnims[state.direction].getCurrentFrame();
+            break;
+        case Behavior::SCRATCHING:
+            return scratchAnim.getCurrentFrame();
+            break;
+        default:
+            return washAnim.getCurrentFrame();
+            break;
     }
 }
 
-void GameState::displayTempText(const char * text)
-{
-    if (duration > 0.0f && (showSavedText || showConnectedText))
-    {
-        DrawText(text, 0, 0, 10, RAYWHITE);
-        duration -= GetFrameTime();
-
-        if(duration < 0.0f){
-            showSavedText = false;
-            showConnectedText = false;
-            duration = 1;
-        }
-
-    }
-}
-
-void GameState::toggleColorPalette(Color& catColor)
-{
-
-    if(showColor)
-    {
-
-        SetWindowSize(200, 200);
-        GuiColorPicker((Rectangle){ 0, 0, 50, 50 }, "Test Picker", &catColor);
-    }
-
-}

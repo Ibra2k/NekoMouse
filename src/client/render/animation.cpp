@@ -41,7 +41,6 @@ void Animation::animationUpdate()
 
 const Texture2D& Animation::getCurrentFrame()
 {
-
     assert(!pimpl->frames.empty());
 
     return pimpl->frames[m_current];

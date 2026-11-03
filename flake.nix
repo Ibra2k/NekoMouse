@@ -23,6 +23,8 @@
             cmake
             gnumake
 
+            tracy
+
             raylib
             asio
             pkg-config
@@ -32,3 +34,4 @@
       }
     );
 }
+
