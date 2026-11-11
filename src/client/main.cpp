@@ -30,7 +30,7 @@ int main() {
 
     asio::io_context io;
 
-    SetTargetFPS(30);
+    SetTargetFPS(60);
 
 
     //TODO: Move "GameState" -> cat_renderer.cpp/h
@@ -94,7 +94,7 @@ int main() {
             {
                 client.connect();
             }
-            catch (std::exception e)
+            catch (std::exception &e)
             {
                 TraceLog(LOG_INFO, "Could Not Connect\n");
             }

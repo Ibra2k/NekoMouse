@@ -33,7 +33,7 @@ void Server::startAccept()
 			{
 				std::cout << "Connected: " << self->socket().remote_endpoint() << '\n';
 
-				self->connections.push_back(*connection);
+				self->connections.push_back(self);
 
 				self->startRead();
 			} else {

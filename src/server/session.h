@@ -18,13 +18,15 @@ class Session : public std::enable_shared_from_this<Session>
 
 public:
 
-	std::vector<Session> connections {};
+
+	// Cant copy sockets so use weak_ptrs to delete and use connections
+	std::vector<std::weak_ptr<Session>> connections {};
+
 	Session(asio::io_context& io);
 	static std::shared_ptr<Session> create(asio::io_context& io);
 	tcp::socket& socket();
 
 	void startRead();
-	void assignClientID();
 
 	void readIntoHead();
 	void readIntoBody();

@@ -1,4 +1,5 @@
 #include "settings.h"
+#include <cstdlib>
 #include <filesystem>
 #include <fstream>
 
@@ -6,14 +7,21 @@ namespace
 {
 	std::string getSaveFilePath()
 	{
-		std::string home = std::getenv("HOME");
-
+#ifdef _WIN32
+		// Windows has no HOME; app settings go in %APPDATA% (e.g. C:\Users\you\AppData\Roaming).
+		const char* base = std::getenv("APPDATA");
+		std::filesystem::path dir { base ? std::filesystem::path(base) : std::filesystem::path(".") };
+		dir /= "NekoCat";
+#else
+		// getenv returns null if the variable isn't set; building a std::string from null crashes.
+		const char* home = std::getenv("HOME");
 		std::filesystem::path dir {
-			std::filesystem::path(home) /
+			std::filesystem::path(home ? home : ".") /
 			"Library" /
 			"Application Support"/
 			"NekoCat"
 		};
+#endif
 
 		std::filesystem::create_directories(dir);
 

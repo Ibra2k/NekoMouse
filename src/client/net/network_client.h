@@ -16,7 +16,7 @@
 class NetworkClient 
 {
 
-	const std::string_view SERVER_IP {"127.0.0.1"};
+	const std::string_view SERVER_IP {"192.168.101.28"};
 	const std::uint16_t SERVER_PORT {1313};
 
 	std::array<std::uint8_t, HEADER_SIZE> m_headerBuffer{};

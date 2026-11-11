@@ -16,7 +16,7 @@ Session::Session(asio::io_context& io):
 std::shared_ptr<Session> Session::create(asio::io_context& io)
 {
 	std::cout << "Created Session\n";
-	return std::shared_ptr<Session>(new Session(io));
+	return std::make_shared<Session>(io);
 }
 
 tcp::socket& Session::socket()
@@ -51,15 +51,6 @@ void Session::readIntoBody()
 
 }
 
-void Session::assignClientID()
-{
-	std::size_t index { connections.size() - 1 };
-
-	CatPacket packet = decodeBody(connections[index].m_bodyBuffer);
-
-	packet.id = connections.size();
-}
-
 void Session::readIntoHead()
 {
 	// Ensure we keep connection/obj alive
@@ -71,7 +62,6 @@ void Session::readIntoHead()
 			if (!ec && HEADER_SIZE == bytesTransferred) 
 			{
 				std::cout << bytesTransferred << " bytes transferred!\n";
-				this->assignClientID();
 				this->readIntoBody();
 			}
 			else
@@ -166,21 +156,35 @@ void printCatPacket(const CatPacket& packet)
 
 
 
+
 void Session::logData()
 {
-	MetaData header = decodeHeader(m_headerBuffer);
+
+	if(connections.empty())
+	{
+		std::cout << "Error: Connection vector empty\n";
+		return;
+	}
+
+	std::shared_ptr<Session> connectionWithClient { connections.back().lock() };
+
+	MetaData header = decodeHeader(connectionWithClient->m_headerBuffer);
 
 	checkHeaderData(header);
 
-	CatPacket packet = decodeBody(m_bodyBuffer);
+	CatPacket packet = decodeBody(connectionWithClient->m_bodyBuffer);
 
-	printHex("Header", m_headerBuffer);
-	printHex("Body", m_bodyBuffer);
+	packet.id = connections.size();
+
+	printHex("Header", connectionWithClient->m_headerBuffer);
+	printHex("Body", connectionWithClient->m_bodyBuffer);
 
 	printHeader(header);
 	printCatPacket(packet);
 
 	std::cout << "------------------------------\n";
 }
+
+
 
 
