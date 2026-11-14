@@ -4,6 +4,7 @@
 #include "../client/render/state.h"
 #include "../client/world/cat.h"
 #include "../client/render/cat_renderer.h"
+#include "../common/protocol.h"
 #include "ui/menu.h"
 #include <asio/socket_base.hpp>
 #include <exception>
@@ -20,7 +21,9 @@ int main() {
                FLAG_WINDOW_TOPMOST | FLAG_WINDOW_MOUSE_PASSTHROUGH) ;
 
     SetTraceLogLevel(LOG_DEBUG);
-    ScreenDimensions screen  = getScreenDimensions();
+    ScreenDimensions screen = getScreenDimensions();
+    dimensions = {screen.width, screen.height};
+
 
     InitWindow(
         static_cast<int>(screen.width) - 1,
@@ -29,6 +32,7 @@ int main() {
     );
 
     asio::io_context io;
+
 
     SetTargetFPS(30);
 
@@ -74,10 +78,14 @@ int main() {
         game.updateAnims();
 
 
+
+
         if(game.onlineToggle)
         {
-                //TODO: Send state on a "state change"
-                client.sendState(myCat.getState(), (MetaData){Type::UPDATE, 1, 18});
+            //TODO: Send state on a "state change"
+            client.sendState(myCat.getState(), (MetaData){Type::UPDATE, 1, 18});
+
+            io.poll();
         }
 
 
@@ -105,6 +113,12 @@ int main() {
         ClearBackground(BLANK);
 
         drawCat(myCat.getState(), game, settings.scale);
+
+        for (const auto& [id, state]: client.m_remoteCats.getCats())
+        {
+            TraceLog(LOG_INFO, "ID = %d", id);
+            drawCat(state, game, settings.scale);
+        }
 
         if( menu.isToggled() ) menu.drawOnOpen(userMenu, settings, screen.width);
         else menu.drawOnClose(userMenu);

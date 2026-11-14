@@ -6,7 +6,6 @@
 #include <cstdint>
 #include "session.h"
 
-
 using asio::ip::tcp;
 
 class Server
@@ -20,6 +19,7 @@ class Server
 
 	template<std::size_t S>
 	void readDataIntoBuffer(std::array<std::uint8_t, S>& arr, tcp::socket& socket);
+
 public:
 
 	Server(asio::io_context& io);

@@ -1,5 +1,4 @@
 #include "server.h"
-#include <array>
 #include <asio/buffer.hpp>
 #include <asio/error_code.hpp>
 #include <asio/io_context.hpp>
@@ -33,7 +32,7 @@ void Server::startAccept()
 			{
 				std::cout << "Connected: " << self->socket().remote_endpoint() << '\n';
 
-				self->connections.push_back(*connection);
+				Session::connections.push_back(self);
 
 				self->startRead();
 			} else {
@@ -43,7 +42,6 @@ void Server::startAccept()
 			this->startAccept();
 		}
 	);
-
 }
 
 

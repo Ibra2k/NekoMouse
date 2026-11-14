@@ -1,8 +1,12 @@
 #include "session.h"
 #include <array>
 #include <asio/detail/impl/socket_ops.ipp>
+#include <asio/error_code.hpp>
 #include <asio/io_context.hpp>
+#include <asio/ip/tcp.hpp>
 #include <asio/read_until.hpp>
+#include <asio/strand.hpp>
+#include <asio/write.hpp>
 #include <cstddef>
 #include <cstdint>
 #include <memory>
@@ -24,6 +28,49 @@ tcp::socket& Session::socket()
 	return m_socket;
 }
 
+
+
+void Session::sendBodyToUser()
+{
+	auto self {shared_from_this()};
+
+	asio::async_write(
+		m_socket,
+		asio::buffer(m_bodyBuffer),
+		[this, self](const asio::error_code& ec, std::size_t bytesTransferred){
+			if(ec)
+			{
+				std::cout << "Error In Sending Body: " << ec.message() << '\n';
+			}
+
+			this->readIntoHead();
+		}
+	);
+
+
+}
+
+void Session::sendHeadToUser()
+{
+	auto self {shared_from_this()};
+
+	asio::async_write(
+		m_socket,
+		asio::buffer(m_headerBuffer),
+		[this, self](const asio::error_code& ec, std::size_t bytesTransferred){
+
+			if(ec)
+			{
+				std::cout << "Error In Sending Head: " << ec.message() << '\n';
+			}
+
+			this->sendBodyToUser();
+		}
+	);
+
+
+}
+
 void Session::readIntoBody()
 {
 
@@ -35,30 +82,25 @@ void Session::readIntoBody()
 		asio::buffer(m_bodyBuffer),
 		[this, self](const asio::error_code& ec, std::size_t bytesTransferred){
 
-			if(BODY_SIZE == bytesTransferred)
+			if(!ec && BODY_SIZE == bytesTransferred)
 			{
 				std::cout << bytesTransferred << " bytes transferred!\n";
 			}
-			if(ec)
+			
+			else
 			{
 				std::cout << "Error In Body: " << ec.message() << '\n';
 			}
 
 			logData();
-			this->readIntoHead();
+
+			this->sendHeadToUser();
 		}
 	);
 
 }
 
-void Session::assignClientID()
-{
-	std::size_t index { connections.size() - 1 };
 
-	CatPacket packet = decodeBody(connections[index].m_bodyBuffer);
-
-	packet.id = connections.size();
-}
 
 void Session::readIntoHead()
 {
@@ -68,16 +110,18 @@ void Session::readIntoHead()
 		m_socket,
 		asio::buffer(m_headerBuffer),
 		[this, self](const asio::error_code& ec, std::size_t bytesTransferred){
-			if (!ec && HEADER_SIZE == bytesTransferred) 
+			
+			if(ec)
 			{
-				std::cout << bytesTransferred << " bytes transferred!\n";
-				this->assignClientID();
-				this->readIntoBody();
+				std::cout << "No Packets Recieved..." << '\n';
+				self->m_socket.shutdown(asio::ip::tcp::socket::shutdown_receive);
+				self->m_socket.cancel();
+				return;
 			}
 			else
 			{
-				std::cout << "Error In Head: " << ec.message() << '\n';
-				self->m_socket.close();
+				std::cout << bytesTransferred << " bytes transferred!\n";
+				this->readIntoBody();
 			}
 		}
 	);
@@ -168,17 +212,41 @@ void printCatPacket(const CatPacket& packet)
 
 void Session::logData()
 {
-	MetaData header = decodeHeader(m_headerBuffer);
 
-	checkHeaderData(header);
+	if(connections.empty())
+	{
+		std::cout << "Error: Connection vector empty\n";
+		return;
+	}
 
-	CatPacket packet = decodeBody(m_bodyBuffer);
 
-	printHex("Header", m_headerBuffer);
-	printHex("Body", m_bodyBuffer);
+	std::size_t id {1};
+	for (auto eachConnection: connections)
+	{
+		auto connectionPtr = eachConnection.lock();
 
-	printHeader(header);
-	printCatPacket(packet);
+		if (connectionPtr)
+		{
+			MetaData header = decodeHeader(connectionPtr->m_headerBuffer);
+
+			checkHeaderData(header);
+
+			CatPacket packet = decodeBody(connectionPtr->m_bodyBuffer);
+
+			packet.id = id;
+
+			printCatPacket(packet);
+
+			id++;
+		}
+		else
+		{
+			eachConnection.reset();
+		}
+
+
+	}
+
 
 	std::cout << "------------------------------\n";
 }

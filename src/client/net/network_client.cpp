@@ -26,6 +26,8 @@ void NetworkClient::connect()
 
 	asio::error_code ec {};
 	m_socket.connect(endpoint);
+
+	readHeader();
 }
 
 
@@ -158,34 +160,45 @@ void NetworkClient::readHeader()
 	asio::async_read(
 		m_socket,
 		asio::buffer(m_headerBuffer),
-		[](const asio::error_code& ec, std::size_t bytesTransferred)
+		[this](const asio::error_code& ec, std::size_t bytesTransferred)
 		{
-			if(!ec) TraceLog(LOG_INFO, "Header Read Success\n");
-			else TraceLog(LOG_ERROR, "Header Read Failed\n");
+			if(ec)
+			{
+				this->m_socket.cancel();
+				TraceLog(LOG_ERROR, "Header Read Failed\n");
+			}
+			else 
+			{
+				TraceLog(LOG_INFO, "Header Read Success\n");
+				onHeader();
+			}
 		}
 	);
-	
-	if ( isError(ec) ) m_socket.close();
-	onHeader();
 }
 
 void NetworkClient::readBody()
 {
 	asio::error_code ec;
 
+
 	 asio::async_read(
 		m_socket,
 		asio::buffer(m_bodyBuffer),
-		[](const asio::error_code& ec, std::size_t bytesTransferred)
+		[this](const asio::error_code& ec, std::size_t bytesTransferred)
 		{
-			if(!ec) TraceLog(LOG_INFO, "Body Read Success\n");
-			else TraceLog(LOG_ERROR, "Body Read Failed\n");
+			if(ec)
+			{
+				this->m_socket.cancel();
+				TraceLog(LOG_ERROR, "Header Read Failed\n");
+			}
+			else 
+			{
+				TraceLog(LOG_INFO, "Header Read Success\n");
+				onBody();
+			}
 		}
 	);
-	
-	if ( isError(ec) ) m_socket.close();
 
-	onBody();
 
 }
 void NetworkClient::onHeader()
@@ -204,6 +217,11 @@ void NetworkClient::onBody()
 	CatState state = fromPacket(packet, m_screen);
 
 	m_remoteCats.update(packet.id, state);
+
+	for(const auto& [id, state] : m_remoteCats.getCats())
+	{
+		TraceLog(LOG_INFO, "y recieved = %d | y recieved = %d", state.x, state.y);
+	}
 
 	readHeader();
 }
